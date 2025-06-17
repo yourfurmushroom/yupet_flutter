@@ -64,7 +64,7 @@ BluetoothCharacteristic? characteristic;
 WebSocketChannel? ws=null;
 String userName = "";
 int quantity = 0;
-List<String> petList = [];
+List<String> petList = ['1'];
 Stream<List<int>>? listener;
 
 class _HomePageState extends State<HomePage> {
@@ -255,12 +255,12 @@ void logoutHandler()
   }
 
   void navigateToChart() {
-    if (!loginStatus) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('未登入 請登入')),
-      );
-      return;
-    }
+    // if (!loginStatus) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(content: Text('未登入 請登入')),
+    //   );
+    //   return;
+    // }
 
     if (device == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -313,7 +313,7 @@ void disconnectDevice() async {
           actionName: '歐汪心動時刻',
           loginHandler: loginHandler,
         ),
-        backgroundColor: Color.fromRGBO(252, 212, 125, 1),
+        backgroundColor: Color.fromRGBO(154, 201, 245, 1),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Center(
@@ -367,7 +367,7 @@ void disconnectDevice() async {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 106, 161, 206),
+          backgroundColor: const Color.fromARGB(255, 240, 217, 141),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),

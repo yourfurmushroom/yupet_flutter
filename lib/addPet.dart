@@ -6,7 +6,11 @@ class Addpet extends StatefulWidget {
   final void Function(String, Map<String, dynamic>) sendToWs;
   final void Function(String) addToList;
   final String userName;
-  const Addpet({super.key, required this.sendToWs, required this.userName,required this.addToList});
+  const Addpet(
+      {super.key,
+      required this.sendToWs,
+      required this.userName,
+      required this.addToList});
 
   @override
   _Addpet createState() => _Addpet();
@@ -70,104 +74,110 @@ class _Addpet extends State<Addpet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.8,
-          padding: const EdgeInsets.all(20),
-          // margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black,
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: const Offset(0, 3),
-              ),
-            ],
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+            top: 20,
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Pet Status',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'PetName',
-                  border: OutlineInputBorder(),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black,
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: const Offset(0, 3),
                 ),
-                onChanged: (value) => setState(() => name = value),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Pet Type',
-                  border: OutlineInputBorder(),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Pet Status',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                onChanged: (value) => setState(() => type = value),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Pet age',
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 20),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'PetName',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) => setState(() => name = value),
                 ),
-                onChanged: (value) => setState(() => age = value),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Pet weight',
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 20),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Pet Type',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) => setState(() => type = value),
                 ),
-                onChanged: (value) => setState(() => weight = value),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Pet Gender',
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 20),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Pet age',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) => setState(() => age = value),
                 ),
-                onChanged: (value) => setState(() => sex = value),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Note',
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 20),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Pet weight',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) => setState(() => weight = value),
                 ),
-                onChanged: (value) => setState(() => note = value),
-              ),
-              const SizedBox(height: 30),
-              Center(
-                child: Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => validationData(),
-                      child: const Text('註冊', style: TextStyle(fontSize: 16)),
-                    ),
-                    Row(
-                      children: [
-                        Text("如果擁有賬號"),
-                        TextButton(
+                const SizedBox(height: 20),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Pet Gender',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) => setState(() => sex = value),
+                ),
+                const SizedBox(height: 20),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Note',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) => setState(() => note = value),
+                ),
+                const SizedBox(height: 30),
+                Center(
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => validationData(),
+                        child: const Text('註冊', style: TextStyle(fontSize: 16)),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("如果擁有賬號"),
+                          TextButton(
                             onPressed: () => Navigator.pop(context),
-                            child: Text(
+                            child: const Text(
                               "點我登入",
                               style: TextStyle(color: Colors.blue),
-                            ))
-                      ],
-                    )
-                  ],
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
