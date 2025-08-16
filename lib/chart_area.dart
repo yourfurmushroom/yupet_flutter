@@ -29,11 +29,11 @@ class _ChartAreaState extends State<ChartArea> with SingleTickerProviderStateMix
   late StreamSubscription<List<int>> _subscription;
   final double minY = -1.5;
   final double maxY = 1.5;
-  final ListQueue<double> _data = ListQueue<double>.from(List.filled(200, 0.0));
+  final ListQueue<double> _data = ListQueue<double>.from(List.filled(334, 0.0));
   List<double> ecgTodb = [];
 
   late final Ticker _ticker;
-  final int maxLength = 200;
+  final int maxLength = 334;
 
   final List<List<double>> sosCoefficients = [
     [0.2929, 0.5858, 0.2929, 1.0, -0.0, 0.1716], // 示意濾波器
@@ -97,17 +97,24 @@ class _ChartAreaState extends State<ChartArea> with SingleTickerProviderStateMix
   }
 
   List<double> parseEcg(List<int> data) {
-    List<double> ecgValues = [];
-    for (int i = 0; i < data.length - 1; i += 2) {
-      int lowByte = data[i];
-      int highByte = data[i + 1];
-      int value = (highByte << 8) | lowByte;
-      if (value >= 0x8000) value -= 0x10000;
-      double normalized = value / 32768.0;
-      ecgValues.add(normalized);
+  List<double> ecgValues = [];
+
+  // 從 byte[3] 開始，兩兩一組
+  for (int i = 3; i < data.length - 1; i += 2) {
+    int lowByte = data[i];
+    int highByte = data[i + 1];
+    // 組合 16-bit 整數 (little endian)
+    int val = highByte * 256 + lowByte;
+    // 轉換成 signed 16-bit
+    if (val >= 32768) {
+      val -= 65536;
     }
-    return ecgValues;
+    // 換算成電壓值 (單位 Volt)
+    double voltage = val * 3.6 / 4096.0;
+    ecgValues.add(voltage);
   }
+  return ecgValues;
+}
 
   double applyButterworthFilterSingle(double input, List<List<double>> sos, List<List<double>> z) {
     double x = input;
